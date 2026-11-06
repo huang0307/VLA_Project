@@ -1,0 +1,100 @@
+# ==========================================
+# VLA Project - ROS 2 Monorepo
+# ==========================================
+
+# ---------- ROS 2 / Colcon ----------
+**/build/
+**/install/
+**/log/
+**/.colcon/
+.colcon/
+
+# ---------- CMake ----------
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+*.cmake.user
+
+# ---------- Compiled files ----------
+*.o
+*.obj
+*.so
+*.so.*
+*.a
+*.lib
+*.dll
+*.exe
+*.out
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# ---------- ROS 2 Runtime ----------
+ros2_*.log
+*.bag
+*.db3
+*.mcap
+
+# ---------- SLAM / Mapping generated data ----------
+# 忽略运行产生的大体积点云和 SLAM 后端文件
+*.pcd
+*.ply
+*.las
+*.laz
+*.pbstream
+*.posegraph
+
+# ---------- Sensor data ----------
+# 默认忽略，以后如果遇到必须保留的小测试数据，可在下方加 !test_data/
+*.pcap
+*.bin
+*.raw
+
+# ---------- Temporary files ----------
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# ---------- Environment / Secrets ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.secret
+
+# ---------- VS Code ----------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# ---------- JetBrains ----------
+.idea/
+
+# ---------- OS / Windows WSL2 specific ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier
+
+# ---------- Logs ----------
+*.log
+
+# ---------- Backup ----------
+*.orig
+*.rej
