@@ -98,3 +98,10 @@ desktop.ini
 # ---------- Backup ----------
 *.orig
 *.rej
+# ---------- 吸收自 Velodyne 官方雷达包 ----------
+*.pyc
+*.tar.gz
+*~
+*.user
+doc/
+TAGS
