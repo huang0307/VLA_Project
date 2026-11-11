@@ -22,4 +22,4 @@ slam_toolbox:
     # --- 高级闭环参数 ---
     # 开启闭环检测（回到起点时自动纠正误差）
     do_loop_closing: true
-    loop_search_maximum_distance: 3.0
+    loop_search_maximum_distance: 8.0
