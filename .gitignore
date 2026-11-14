@@ -1,5 +1,5 @@
 # ==========================================
-# VLA Project - ROS 2 Monorepo
+# VLA Project - ROS 2 Monorepo (Jetson & WSL)
 # ==========================================
 
 # ---------- ROS 2 / Colcon ----------
@@ -9,6 +9,10 @@
 **/.colcon/
 .colcon/
 
+# 兼容 WSL (x86) 和 Jetson (ARM64) 的编译中间件
+.obj-x86_64-linux-gnu/
+.obj-aarch64-linux-gnu/ 
+
 # ---------- CMake ----------
 CMakeFiles/
 CMakeCache.txt
@@ -16,8 +20,9 @@ cmake_install.cmake
 Makefile
 compile_commands.json
 *.cmake.user
+cmake-build-*/
 
-# ---------- Compiled files ----------
+# ---------- 编译生成文件 (C/C++) ----------
 *.o
 *.obj
 *.so
@@ -27,8 +32,25 @@ compile_commands.json
 *.dll
 *.exe
 *.out
+*.d
+*.slo
+*.lo
+*.gch
+*.pch
 
-# ---------- Python ----------
+# 🔥 [极其重要] 放行 Orbbec 官方 SDK 的底层动态库
+# 包含 x64 (WSL) 和 arm64 (Jetson) 两个架构
+!**/orbbec_camera/SDK/**/*.so
+!**/orbbec_camera/SDK/**/*.so.*
+
+# ---------- Debian 打包相关 ----------
+*.deb
+*.ddeb
+debian/
+*.buildinfo
+*.changes
+
+# ---------- Python (ROS 2 节点及脚本) ----------
 __pycache__/
 *.py[cod]
 *$py.class
@@ -39,27 +61,55 @@ __pycache__/
 venv/
 env/
 *.egg-info/
+.Python
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+wheels/
 
 # ---------- ROS 2 Runtime ----------
 ros2_*.log
 *.bag
+*.bag.active
 *.db3
 *.mcap
 
-# ---------- SLAM / Mapping generated data ----------
-# 忽略运行产生的大体积点云和 SLAM 后端文件
+# ---------- SLAM / 传感器数据 ----------
 *.pcd
 *.ply
 *.las
 *.laz
 *.pbstream
 *.posegraph
-
-# ---------- Sensor data ----------
-# 默认忽略，以后如果遇到必须保留的小测试数据，可在下方加 !test_data/
 *.pcap
 *.bin
 *.raw
+
+# ---------- 🔥 VLA Project 专属 (边缘端 AI 模型与数据) ----------
+# 训练权重
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.safetensors
+checkpoints/
+weights/
+
+# 边缘端部署模型 (Jetson TensorRT 引擎 / ONNX)
+*.engine
+*.onnx
+*.trt
+
+# 数据集与训练日志
+datasets/
+data/
+wandb/
+tensorboard/
+runs/
+events.out.tfevents.*
 
 # ---------- Temporary files ----------
 *.tmp
@@ -68,6 +118,8 @@ ros2_*.log
 *.swp
 *.swo
 *~
+*.orig
+*.rej
 
 # ---------- Environment / Secrets ----------
 .env
@@ -76,32 +128,35 @@ ros2_*.log
 *.pem
 *.key
 *.secret
+*.pfx
 
-# ---------- VS Code ----------
+# ---------- IDE / Editor ----------
+# VS Code
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
 !.vscode/tasks.json
+.vscode/*.code-snippets
+*.code-workspace
+.history/
 
-# ---------- JetBrains ----------
-.idea/
+# JetBrains (CLion / PyCharm)
+.idea/*
+!.idea/codeStyles
+!.idea/runConfigurations
+*.iml
+*.iws
 
-# ---------- OS / Windows WSL2 specific ----------
+# Qt Creator
+CMakeLists.txt.user
+
+# ---------- OS / 跨平台特定文件 ----------
+# Windows / WSL
 .DS_Store
 Thumbs.db
 desktop.ini
 *:Zone.Identifier
 
-# ---------- Logs ----------
+# ---------- Logs & Agent ----------
 *.log
-
-# ---------- Backup ----------
-*.orig
-*.rej
-# ---------- 吸收自 Velodyne 官方雷达包 ----------
-*.pyc
-*.tar.gz
-*~
-*.user
-doc/
-TAGS
+AGENTS.md
