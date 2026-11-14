@@ -57,11 +57,22 @@ def generate_launch_description():
             name='joint_state_publisher',
     )
     
-    # 7. 加载模型描述文件 (调用文件一)
+    # ==============================================================
+    # 7. 加载模型描述文件
+    # ==============================================================
+    
+    # 👇 【方案一：官方原版】不发布雷达，相机（方式：直接发布）
     flagship_type = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(os.path.join(launch_dir, 'robot_mode_description.launch.py')),
             launch_arguments={'senior_akm': 'true'}.items(),
     )
+    
+    # 👇 【方案二：自定义 URDF】使用主 URDF 文件统一发布坐标
+    # flagship_type = IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource(os.path.join(launch_dir, 'my_robot_urdf.launch.py'))
+    # )
+    
+    # ==============================================================
     
     ld = LaunchDescription()
 

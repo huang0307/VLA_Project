@@ -256,6 +256,10 @@
     <axis
       xyz="0 -1 0" />
   </joint>
+
+  <!-- ======================================================== -->
+  <!-- 【相机】模型外观定义 -->
+  <!-- ======================================================== -->
   <link
     name="camera_link">
     <inertial>
@@ -277,6 +281,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
+        <!-- 👇 如果换了相机，把这里的 camera_link.STL 换成新模型的 STL -->
         <mesh
           filename="package://wheeltec_robot_urdf/meshes/senior_akm_robot_meshes/camera_link.STL" />
       </geometry>
@@ -296,19 +301,29 @@
       </geometry>
     </collision>
   </link>
+
+  <!-- ======================================================== -->
+  <!-- 【相机】安装位置定义 -->
+  <!-- ======================================================== -->
   <joint
     name="camera_joint"
     type="fixed">
+    <!-- 👇 修改这里：xyz 是位置(米)，rpy 是旋转角度(弧度) -->
     <origin
       xyz="0.165778518918356 0.000945202408300414 0.089704"
       rpy="0 0 0" />
     <parent
       link="base_link" />
+    <!-- 🚨 绝对不要改！奥比中光驱动只认 camera_link 这个名字 -->
     <child
       link="camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>
+
+  <!-- ======================================================== -->
+  <!-- 【雷达】模型外观定义 -->
+  <!-- ======================================================== -->
   <link
     name="laser_link">
     <inertial>
@@ -330,6 +345,7 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
+        <!-- 👇 如果换了雷达，把这里的 laser.STL 换成禾赛官方提供的 STL 模型文件 -->
         <mesh
           filename="package://wheeltec_robot_urdf/meshes/senior_akm_robot_meshes/laser.STL" />
       </geometry>
@@ -349,19 +365,27 @@
       </geometry>
     </collision>
   </link>
+
+  <!-- ======================================================== -->
+  <!-- 【雷达】安装位置定义 -->
+  <!-- ======================================================== -->
   <joint
     name="laser_joint"
     type="fixed">
+    <!-- 👇 修改这里：xyz 是位置(米)，rpy 最后一个数字是偏航角(转180度=3.14159) -->
     <origin
       xyz="0.0887405189187401 0.000667202411597726 0.111024183741431"
       rpy="0 0 3.14159265358979" />
     <parent
       link="base_link" />
+    <!-- 🚨 必须改！把 laser_link 改成 hesai_lidar，以匹配禾赛驱动的坐标系 -->
     <child
       link="laser_link" />
     <axis
       xyz="0 0 0" />
   </joint>
+  <!-- ======================================================== -->
+
   <link
     name="controller_link">
     <inertial>
